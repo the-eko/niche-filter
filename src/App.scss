@@ -1,0 +1,46 @@
+@import "modernizer";
+
+$header: #788EEC;
+$navButton: #2DCE4B;
+$white: #fff;
+$mainBG: #F6F7F9;
+$dividerColor: #F1F2F3;
+$linkHoverColor: #788EEC;
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid red;
+  font-family: 'Roboto', sans-serif;
+}
+
+header {
+  position: relative;
+  background: $header;
+  border: 1px solid black;
+  width: 100%;
+  color: $white;
+  padding: 1.5rem 1.5rem 3rem;
+
+  nav li {
+    list-style: none;
+    display: inline-block;
+    margin-left: 1rem;
+  }
+
+  .content{
+    text-align: center;
+  }
+
+  .bottom-nav{
+    background: $white;
+    color: black;
+    position: absolute;
+    width: 80%;
+    left: 10%;
+    bottom: -10%;
+    border: 1px solid red;
+  }
+}
