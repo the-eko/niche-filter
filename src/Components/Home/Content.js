@@ -1,12 +1,35 @@
-import React from "react";
+import React from 'react';
+import img from "../../imgs/img_snow.jpg";
 
-export default Content extends React.Component{
+export default class Content extends React.Component{
 
   render(){
     return(
       <main>
-        main component
+        <div className="site-content">
+        <img src={img} alt=""/>
+        </div>
+        <div className="site-content">
+        <img src={img} alt=""/>
+        </div>
+        <div className="site-content">
+        <img src={img} alt=""/>
+        </div>
+        <div className="site-content">
+        <img src={img} alt=""/>
+        </div>
+        <div className="site-content">
+        <img src={img} alt=""/>
+        </div>
+        <div className="site-content">
+        <img src={img} alt=""/>
+        </div>
+
+        <div className="pagination">
+        123456
+        </div>
       </main>
-    )
+    );
   }
 }
+
