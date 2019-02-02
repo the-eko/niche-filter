@@ -6,7 +6,8 @@ export default class Header extends React.Component {
     return (
       <header>
         <nav className="top-nav">
-          <p>top nav</p>
+        <h3 className="brand-name">Brand Name</h3>
+        <button>Add your website</button>
         </nav>
 
         <div className="content">
@@ -20,13 +21,18 @@ export default class Header extends React.Component {
 
         <nav className="bottom-nav">
           <ul>
+            
+          <li><span className="fa fa-search"></span></li>
             <li>View All</li>
+            <li className="divider"></li>
             <li>Startups</li>
             <li>Product</li>
             <li>Social</li>
             <li>Crypto</li>
             <li>Productivity</li>
             <li>Template</li>
+
+          
           </ul>
 
         </nav>
