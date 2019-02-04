@@ -2,14 +2,13 @@ import React from 'react';
 
 export default class Header extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
 
-    this.state={
-      company: "",
-      url: "",
-      first_cta: "",
-      revenue: 0,
+    this.state = {
+      min_revenue: 0,
+      max_revenue: 0,
+      revenue: 50,
       rating: 0,
       mobile_rating: 1,
       has_video: false,
@@ -18,11 +17,11 @@ export default class Header extends React.Component {
       has_about_us: false,
       has_faq: false,
       has_pricing_tiers: false,
-      speed_test: 1,
+      speed_test: 50,
     }
   }
 
-  handleChange = (event)=> {
+  handleChange = (event) => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
@@ -32,12 +31,42 @@ export default class Header extends React.Component {
     });
   }
 
+  throttle = (func, ms) => {
+
+    let isThrottled = false,
+      savedArgs,
+      savedThis;
+
+    function wrapper() {
+
+      if (isThrottled) {
+        savedArgs = arguments;
+        savedThis = this;
+        return;
+      }
+
+      func.apply(this, arguments);
+
+      isThrottled = true;
+
+      setTimeout(function () {
+        isThrottled = false;
+        if (savedArgs) {
+          wrapper.apply(savedThis, savedArgs);
+          savedArgs = savedThis = null;
+        }
+      }, ms);
+    }
+
+    return wrapper;
+  }
+
   render() {
     return (
       <header>
         <nav className="top-nav">
           <h3 className="brand-name">Brand Name</h3>
-          <button>Add your website</button>
+          <button>Sign Up, It is Free</button>
         </nav>
 
         <div className="content">
@@ -52,44 +81,58 @@ export default class Header extends React.Component {
         <nav className="bottom-nav">
           <ul>
 
-            <li><span className="fa fa-search"></span></li>
-            <li><label>Company Name</label>
-              <input name="company" onChange={this.handleChange} type="text" value={this.state.company} placeholder="Company Name" />
-            </li>
+            <div className="revenues-ratings-speed">
+              <li>
+                <label htmlFor="revenue"> Revenue </label>
+                <select onChange={this.handleChange} name="revenue" id="revenue" value={this.state.revenue}>
+                <option value="50">100k+</option>
+                  <option value="100">100k+</option>
+                  <option value="200">200k+</option>
+                  <option value="300">300k+</option>
+                  <option value="400">400k+</option>
+                  <option value="500">500k+</option>
+                </select>
 
-            <li><label>Website</label>
-              <input name="url" onChange={this.handleChange} type="text" value="" placeholder="Website" />
-            </li>
+              </li>
 
-            <li>
-              <label>First CTA: </label>
-              <input name="first_cta" onChange={this.handleChange} type="text" value="" placeholder="First CTA" />
-            </li>
+              <li>
+                <div>
 
-            <li>
-              <label htmlFor="revenue"> Revenue </label>
-              <select name="revenue" id="revenue">
-                <option value="100">100k+</option>
-                <option value="100">200k+</option>
-                <option value="100">300k+</option>
-              </select>
 
-            </li>
+                  <label> Min Revenue: &nbsp; </label>
+                  <input
+                    name="min_revenue"
+                    type="input"
+                    checked={this.state.min_revenue}
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <div>
+                  <label> Min Revenue: &nbsp; </label>
+                  <input
+                    name="max_revenue"
+                    type="input"
+                    checked={this.state.max_revenue}
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </li>
 
+              
             <li>
               <li>
                 <label htmlFor="rating"> Rating</label>
-                <select name="rating" id="rating">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
+                <select onChange={this.handleChange} name="rating" id="rating" value={this.state.rating}>
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                  <option value={6}>6</option>
+                  <option value={7}>7</option>
+                  <option value={8}>8</option>
+                  <option value={9}>9</option>
+                  <option value={10}>10</option>
                 </select>
 
               </li>
@@ -98,97 +141,109 @@ export default class Header extends React.Component {
             <li>
               <li>
                 <label htmlFor="mobile_rating"> Mobile Rating</label>
-                <select name="mobile_rating" id="mobile_rating">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
+                <select onChange={this.handleChange} value={this.state.mobile_rating} name="mobile_rating" id="mobile_rating">
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                  <option value={6}>6</option>
+                  <option value={7}>7</option>
+                  <option value={8}>8</option>
+                  <option value={9}>9</option>
+                  <option value={10}>10</option>
                 </select>
 
               </li>
             </li>
 
+            
             <li>
-              <label>
-              Video
+              <label htmlFor="speed_test">Google Speed Test: {this.state.speed_test}</label>
+              <input onChange={this.handleChange} value={this.speed_test} type="range" name="speed_test" id="speed_test" min={1} max={100} />
+            </li>
+
+            </div>
+
+
+
+            <div className="checkboxes">
+              <li>
+                <label>
+                  Video: &nbsp;
                 <input
-                  name="has_video"
-                  type="checkbox"
-                  checked={true}
-                  onChange={this.handleInputChange} />
+                    name="has_video"
+                    type="checkbox"
+                    checked={this.state.has_video}
+                    onChange={this.handleChange} />
                 </label>
-            </li>
+              </li>
 
 
-            <li>
-              <label>
-              separate pricing page:
+              <li>
+                <label>
+                  separate pricing page: &nbsp;
                 <input
-                  name="has_separate_pricing_page"
-                  type="checkbox"
-                  checked={true}
-                  onChange={this.handleInputChange} />
+                    name="has_separate_pricing_page"
+                    type="checkbox"
+                    checked={this.state.has_separate_pricing_page}
+                    onChange={this.handleChange}
+                  />
                 </label>
-            </li>
+              </li>
 
-            <li>
-              <label>
-              Enterprise Options:
+              <li>
+                <label>
+                  Enterprise Options: &nbsp;
                 <input
-                  name="has_enterprise_options"
-                  type="checkbox"
-                  checked={true}
-                  onChange={this.handleInputChange} />
+                    name="has_enterprise_options"
+                    type="checkbox"
+                    checked={this.state.has_enterprise_options}
+                    onChange={this.handleChange}
+                  />
                 </label>
-            </li>
+              </li>
 
 
-            <li>
-              <label>
-              Has About Us:
+              <li>
+                <label>
+                  Has About Us: &nbsp;
                 <input
-                  name="has_about_us"
-                  type="checkbox"
-                  checked={true}
-                  onChange={this.handleInputChange} />
+                    name="has_about_us"
+                    type="checkbox"
+                    checked={this.state.has_about_us}
+                    onChange={this.handleChange}
+                  />
                 </label>
-            </li>
+              </li>
 
 
-            <li>
-              <label>
-              Has Faqs:
+              <li>
+                <label>
+                  Has Faqs: &nbsp;
                 <input
-                  name="has_faq"
-                  type="checkbox"
-                  checked={true}
-                  onChange={this.handleInputChange} />
+                    name="has_faq"
+                    type="checkbox"
+                    checked={this.state.has_faq}
+                    onChange={this.handleChange}
+                  />
                 </label>
-            </li>
+              </li>
 
-    
 
-            <li>
-              <label>
-             Pricing Tiers:
+
+              <li>
+                <label>
+                  Pricing Tiers: &nbsp;
                 <input
-                  name="has_pricing_tiers"
-                  type="checkbox"
-                  checked={true}
-                  onChange={this.handleInputChange} />
+                    name="has_pricing_tiers"
+                    type="checkbox"
+                    checked={this.state.has_pricing_tiers}
+                    onChange={this.handleChange}
+                  />
                 </label>
-            </li>
-
-            <li>
-              <label htmlFor="speed_test">Google Speed Test</label>
-              <input type="range" name="speed_test" id="speed_test" start={1} end={100}/>
-            </li>
+              </li>
+            </div>
 
           </ul>
 
