@@ -19,6 +19,8 @@ export default class Header extends React.Component {
       has_pricing_tiers: false,
       speed_test: 50,
     }
+
+
   }
 
   handleChange = (event) => {
@@ -26,40 +28,11 @@ export default class Header extends React.Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
-    this.setState({
-      [name]: value
-    });
+    this.props.changeFilters(name, value);
+
   }
 
-  throttle = (func, ms) => {
-
-    let isThrottled = false,
-      savedArgs,
-      savedThis;
-
-    function wrapper() {
-
-      if (isThrottled) {
-        savedArgs = arguments;
-        savedThis = this;
-        return;
-      }
-
-      func.apply(this, arguments);
-
-      isThrottled = true;
-
-      setTimeout(function () {
-        isThrottled = false;
-        if (savedArgs) {
-          wrapper.apply(savedThis, savedArgs);
-          savedArgs = savedThis = null;
-        }
-      }, ms);
-    }
-
-    return wrapper;
-  }
+  
 
   render() {
     return (
@@ -84,7 +57,7 @@ export default class Header extends React.Component {
             <div className="revenues-ratings-speed">
               <li>
                 <label htmlFor="revenue"> Revenue </label>
-                <select onChange={this.handleChange} name="revenue" id="revenue" value={this.state.revenue}>
+                <select onChange={this.handleChange} name="revenue" id="revenue" value={this.props.filters.revenue}>
                 <option value="50">100k+</option>
                   <option value="100">100k+</option>
                   <option value="200">200k+</option>
@@ -103,7 +76,7 @@ export default class Header extends React.Component {
                   <input
                     name="min_revenue"
                     type="input"
-                    checked={this.state.min_revenue}
+                    checked={this.props.filters.min_revenue}
                     onChange={this.handleChange}
                   />
                 </div>
@@ -112,7 +85,7 @@ export default class Header extends React.Component {
                   <input
                     name="max_revenue"
                     type="input"
-                    checked={this.state.max_revenue}
+                    checked={this.props.filters.max_revenue}
                     onChange={this.handleChange}
                   />
                 </div>
@@ -122,7 +95,7 @@ export default class Header extends React.Component {
             <li>
               <li>
                 <label htmlFor="rating"> Rating</label>
-                <select onChange={this.handleChange} name="rating" id="rating" value={this.state.rating}>
+                <select onChange={this.handleChange} name="rating" id="rating" value={this.props.filters.rating}>
                   <option value={1}>1</option>
                   <option value={2}>2</option>
                   <option value={3}>3</option>
@@ -141,7 +114,7 @@ export default class Header extends React.Component {
             <li>
               <li>
                 <label htmlFor="mobile_rating"> Mobile Rating</label>
-                <select onChange={this.handleChange} value={this.state.mobile_rating} name="mobile_rating" id="mobile_rating">
+                <select onChange={this.handleChange} value={this.props.filters.mobile_rating} name="mobile_rating" id="mobile_rating">
                   <option value={1}>1</option>
                   <option value={2}>2</option>
                   <option value={3}>3</option>
@@ -159,7 +132,7 @@ export default class Header extends React.Component {
 
             
             <li>
-              <label htmlFor="speed_test">Google Speed Test: {this.state.speed_test}</label>
+              <label htmlFor="speed_test">Google Speed Test: {this.props.filters.speed_test}</label>
               <input onChange={this.handleChange} value={this.speed_test} type="range" name="speed_test" id="speed_test" min={1} max={100} />
             </li>
 
@@ -174,7 +147,7 @@ export default class Header extends React.Component {
                 <input
                     name="has_video"
                     type="checkbox"
-                    checked={this.state.has_video}
+                    checked={this.props.filters.has_video}
                     onChange={this.handleChange} />
                 </label>
               </li>
@@ -186,7 +159,7 @@ export default class Header extends React.Component {
                 <input
                     name="has_separate_pricing_page"
                     type="checkbox"
-                    checked={this.state.has_separate_pricing_page}
+                    checked={this.props.filters.has_separate_pricing_page}
                     onChange={this.handleChange}
                   />
                 </label>
@@ -198,7 +171,7 @@ export default class Header extends React.Component {
                 <input
                     name="has_enterprise_options"
                     type="checkbox"
-                    checked={this.state.has_enterprise_options}
+                    checked={this.props.filters.has_enterprise_options}
                     onChange={this.handleChange}
                   />
                 </label>
@@ -211,7 +184,7 @@ export default class Header extends React.Component {
                 <input
                     name="has_about_us"
                     type="checkbox"
-                    checked={this.state.has_about_us}
+                    checked={this.props.filters.has_about_us}
                     onChange={this.handleChange}
                   />
                 </label>
@@ -224,7 +197,7 @@ export default class Header extends React.Component {
                 <input
                     name="has_faq"
                     type="checkbox"
-                    checked={this.state.has_faq}
+                    checked={this.props.filters.has_faq}
                     onChange={this.handleChange}
                   />
                 </label>
@@ -238,7 +211,7 @@ export default class Header extends React.Component {
                 <input
                     name="has_pricing_tiers"
                     type="checkbox"
-                    checked={this.state.has_pricing_tiers}
+                    checked={this.props.filters.has_pricing_tiers}
                     onChange={this.handleChange}
                   />
                 </label>

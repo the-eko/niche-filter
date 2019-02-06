@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { ContextProvider } from "./Context";
+import { AppContextProvider } from "./Context";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import 'font-awesome/css/font-awesome.min.css';
 
 ReactDOM.render(
   <Router>
-    <ContextProvider>
+    <AppContextProvider>
       <App />
-    </ContextProvider>
+    </AppContextProvider>
   </Router>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
