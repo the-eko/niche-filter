@@ -10,17 +10,6 @@ export default class Content extends React.Component {
     return (
       <main>
 
-        <div className="site-content">
-          <img src={img} alt="" />
-          <div className="description">
-            <h4>Name</h4>
-            <p>Description of site</p>
-          </div>
-          <div className="button">
-          <a><span class="fa fa-arrow-right"></span></a>
-          </div>
-        </div>
-
         {data.map(site => (
           <div className="site-content">
           <img src={img} alt={site.name} />
@@ -33,6 +22,8 @@ export default class Content extends React.Component {
           </div>
         </div>
         ))}
+
+        
       </main>
     );
   }

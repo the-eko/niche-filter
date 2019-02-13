@@ -30,21 +30,23 @@ class AppContextProvider extends React.Component{
   }
 
   changeFilters = (fieldname, value)=>{
-    this.setState((state) =>{
-      return {
-        [fieldname]: value
-      }
-    }, 
-    this.filterFunc()
-    )
+
+    this.setState({
+      [fieldname]: value
+    });
+
+    this.filterFunc();
   }
 
   filterFunc = () => {
-    this.data = data.filter(item =>{
-      return ( 
-        (this.state.has_video    ?  item.hasVideo  === this.state.has_video : true  ) 
-      )
+    
+    console.log("filter func running");
+
+    this.data = data.filter( item => {
+      return (  this.state.has_about_us ?  item.hasAboutUs : true   )
     });
+
+    console.log(this.data);
     
   }
 
